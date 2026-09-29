@@ -1,0 +1,8 @@
+{
+  "name": "Synthora - Synthetic Data Studio",
+  "description": "Browser-based synthetic data platform for tabular data, relational hierarchies, and reconciled financial documents.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
