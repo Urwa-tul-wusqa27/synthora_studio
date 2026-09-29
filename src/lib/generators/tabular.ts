@@ -10,6 +10,11 @@ import {
   COUNTRIES,
   STREETS,
   STATUS_OPTIONS,
+  VEHICLES,
+  VEHICLE_COLORS,
+  VEHICLE_MAKES,
+  WORKSHOP_SERVICES,
+  WORKSHOP_STATUS,
 } from '../dictionary';
 
 export interface TabularGenerationResult {
@@ -197,6 +202,39 @@ function generateStandardValue(field: TabularField, prng: MulberryPRNG, rowIndex
 
     case 'string':
     default: {
+      const col = (field.name || '').toLowerCase();
+      // Check if enum values were provided on the field
+      if (field.enumValues && field.enumValues.length > 0) {
+        return prng.pick(field.enumValues);
+      }
+
+      // Automotive & vehicle detection
+      if (col.includes('vehicle') || col.includes('car') || col.includes('model') || col.includes('automobile')) {
+        return prng.pick(VEHICLES);
+      }
+      if (col.includes('color') || col.includes('colour') || col.includes('paint')) {
+        return prng.pick(VEHICLE_COLORS);
+      }
+      if (col.includes('make') || col.includes('brand') || col.includes('manufacturer')) {
+        return prng.pick(VEHICLE_MAKES);
+      }
+      if (col.includes('plate') || col.includes('registration') || col.includes('reg_no')) {
+        const letters = ['ABC', 'XYZ', 'KBR', 'WSH', 'DXB', 'LHR', 'NYC', 'CA'];
+        return `${prng.pick(letters)}-${prng.nextInt(1000, 9999)}`;
+      }
+      if (col.includes('vin') || col.includes('chassis')) {
+        return `1HGCR2F${prng.nextInt(10, 99)}HA${prng.nextInt(100000, 999999)}`;
+      }
+      if (col.includes('mechanic') || col.includes('technician') || col.includes('advisor')) {
+        return `${prng.pick(FIRST_NAMES)} ${prng.pick(LAST_NAMES)}`;
+      }
+      if (col.includes('service') || col.includes('repair') || col.includes('fault') || col.includes('issue')) {
+        return prng.pick(WORKSHOP_SERVICES);
+      }
+      if (col.includes('workshop') || col.includes('garage') || col.includes('station')) {
+        return `${prng.pick(['Apex', 'Metro', 'Precision', 'Autocare', 'MasterTech', 'QuickFix'])} Auto Care`;
+      }
+
       const prefix = field.prefix || 'SYNTH';
       return `${prefix}-${String(rowIndex + 1).padStart(4, '0')}-${prng.nextInt(100, 999)}`;
     }

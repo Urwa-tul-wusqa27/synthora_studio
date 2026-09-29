@@ -81,3 +81,34 @@ export const BANK_TRANSACTIONS = [
   { desc: 'Vendor Settlement - CloudFlare Edge CDN', type: 'debit', minCents: 42000, maxCents: 95000 },
   { desc: 'Contractor Professional Services Payout', type: 'debit', minCents: 85000, maxCents: 240000 }
 ];
+
+export const VEHICLES = [
+  'Toyota Camry', 'Honda Civic', 'Ford F-150', 'BMW 3 Series', 'Tesla Model 3',
+  'Mercedes-Benz C-Class', 'Chevrolet Silverado', 'Audi A4', 'Hyundai Tucson',
+  'Nissan Altima', 'Volkswagen Golf', 'Porsche 911', 'Subaru Outback', 'Mazda CX-5',
+  'Jeep Wrangler', 'Kia Sportage', 'Lexus RX 350', 'Volvo XC60', 'Ford Mustang'
+] as const;
+
+export const VEHICLE_COLORS = [
+  'Midnight Black', 'Pearl White', 'Silver Metallic', 'Deep Navy Blue',
+  'Crimson Red', 'Graphite Gray', 'British Racing Green', 'Sunset Orange',
+  'Titanium Silver', 'Charcoal Metallic', 'Alpine White', 'Sonic Blue'
+] as const;
+
+export const VEHICLE_MAKES = [
+  'Toyota', 'Honda', 'Ford', 'BMW', 'Tesla', 'Mercedes-Benz',
+  'Chevrolet', 'Audi', 'Hyundai', 'Nissan', 'Volkswagen', 'Porsche', 'Mazda'
+] as const;
+
+export const WORKSHOP_SERVICES = [
+  'Engine Oil & Filter Change', 'Brake Pad Replacement', 'Wheel Alignment & Balancing',
+  'Transmission Fluid Flush', 'A/C Servicing & Gas Refill', 'Battery Health Diagnostics',
+  'Suspension System Overhaul', 'Comprehensive Multipoint Inspection', 'Spark Plug Replacement',
+  'Radiator Coolant Replacement'
+] as const;
+
+export const WORKSHOP_STATUS = [
+  'Checked In', 'In Diagnostic', 'Awaiting Parts', 'Work In Progress',
+  'Quality Tested', 'Ready for Pickup', 'Completed & Paid'
+] as const;
+

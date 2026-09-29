@@ -29,7 +29,14 @@ const PROMPT_PRESETS = [
 const parser = new RuleBasedSchemaParser();
 
 export const AIPromptStudio: React.FC = () => {
-  const { theme, setTabularFields, setRecordCount, setCurrentView } = useStudioStore();
+  const {
+    theme,
+    setTabularFields,
+    setRecordCount,
+    setTableName,
+    randomizeSeed,
+    setCurrentView,
+  } = useStudioStore();
   const [promptInput, setPromptInput] = useState(PROMPT_PRESETS[0]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [pipelineState, setPipelineState] = useState<SchemaGenerationPipeline | null>(null);
@@ -60,6 +67,8 @@ export const AIPromptStudio: React.FC = () => {
     if (!parseResult) return;
     setTabularFields(parseResult.fields);
     setRecordCount(parseResult.detectedCount);
+    setTableName(parseResult.detectedDomain.toLowerCase().replace(/[^a-z0-9]/g, '_'));
+    randomizeSeed();
     setCurrentView('tabular');
   };
 

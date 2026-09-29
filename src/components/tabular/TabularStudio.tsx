@@ -53,6 +53,7 @@ const AVAILABLE_TYPES: { type: FieldType; label: string }[] = [
 export const TabularStudio: React.FC = () => {
   const {
     seed,
+    randomizeSeed,
     recordCount,
     setRecordCount,
     tabularFields,
@@ -118,6 +119,7 @@ export const TabularStudio: React.FC = () => {
       setTabularFields(res.fields);
       setRecordCount(res.detectedCount);
       setTableName(res.detectedDomain.toLowerCase().replace(/[^a-z0-9]/g, '_'));
+      randomizeSeed();
       setPromptInput('');
       setIsSchemaDrawerOpen(true);
       try {
