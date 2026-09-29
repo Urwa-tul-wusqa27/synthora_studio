@@ -11,6 +11,7 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   RotateCcw,
   CheckCircle2,
   FileCode,
@@ -65,7 +66,7 @@ export const TabularStudio: React.FC = () => {
     resetDefaultFields,
   } = useStudioStore();
 
-  const [isSchemaDrawerOpen, setIsSchemaDrawerOpen] = useState(true); // Open by default so user immediately sees their schema
+  const [isSchemaDrawerOpen, setIsSchemaDrawerOpen] = useState(false); // Hidden/collapsed by default, opens on user click
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isSchemaModalOpen, setIsSchemaModalOpen] = useState(false);
@@ -105,6 +106,7 @@ export const TabularStudio: React.FC = () => {
       outlierRate: 0,
     };
     addField(newField);
+    setIsSchemaDrawerOpen(true);
   };
 
   const handleSynthesizeFromPrompt = async () => {
@@ -117,6 +119,7 @@ export const TabularStudio: React.FC = () => {
       setRecordCount(res.detectedCount);
       setTableName(res.detectedDomain.toLowerCase().replace(/[^a-z0-9]/g, '_'));
       setPromptInput('');
+      setIsSchemaDrawerOpen(true);
       try {
         confetti({ particleCount: 35, spread: 50, origin: { y: 0.7 } });
       } catch {}
@@ -179,22 +182,29 @@ export const TabularStudio: React.FC = () => {
             <div className="flex items-center flex-wrap gap-2">
               <button
                 onClick={() => setIsSchemaModalOpen(true)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors cursor-pointer"
               >
                 <FileCode className="w-4 h-4" />
                 <span>Save / Reuse Schema JSON</span>
               </button>
 
               <button
+                type="button"
                 onClick={() => setIsSchemaDrawerOpen(!isSchemaDrawerOpen)}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-colors ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                   isSchemaDrawerOpen
                     ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-100'
+                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700/60 hover:text-slate-950 dark:hover:text-white shadow-2xs'
                 }`}
+                aria-expanded={isSchemaDrawerOpen}
               >
-                <Sliders className="w-4 h-4" />
+                <Sliders className="w-4 h-4 text-blue-500 dark:text-blue-400" />
                 <span>{isSchemaDrawerOpen ? 'Hide Column Editor' : `Edit Columns (${tabularFields.length})`}</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    isSchemaDrawerOpen ? 'rotate-180 text-white' : 'text-slate-400'
+                  }`}
+                />
               </button>
             </div>
           </div>
